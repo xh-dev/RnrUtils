@@ -1,0 +1,80 @@
+## Dependency
+
+maven
+```xml
+    <dependency>
+        <groupId>dev.xethh.webtools</groupId>
+        <artifactId>RNRUtils</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+```
+
+## Demo
+
+### Request creation
+```java
+package dev.xethh.webtools;
+
+import dev.xethh.webtool.dto.base.request.PaginatedRequest;
+import dev.xethh.webtool.dto.base.request.Request;
+
+public class RequestCreationDemo {
+    /**
+     * Simple Request, just extends {@link Request}
+     */
+    public static class SomeRequest extends Request{
+        private String fieldA;
+
+        public String getFieldA() {
+            return fieldA;
+        }
+
+        public void setFieldA(String fieldA) {
+            this.fieldA = fieldA;
+        }
+    }
+
+    /**
+     * Paginated Request, just extends {@link PaginatedRequest}
+     */
+    public static class SomePaginatedRequest extends PaginatedRequest {
+        private String fieldB;
+
+        public String getFieldB() {
+            return fieldB;
+        }
+
+        public void setFieldB(String fieldB) {
+            this.fieldB = fieldB;
+        }
+    }
+    
+    public static void main(String[] args){
+    }
+}
+```
+
+### Response creation
+```java
+import dev.xethh.webtool.dto.base.response.FailResponse;
+import dev.xethh.webtool.dto.base.response.SuccessResponse;
+
+import java.util.Arrays;
+
+public class Demo {
+    public static void main(String[] args){
+        //Create Response without payload
+        SuccessResponse.noPayload();
+        
+        //Create Response with single item payload
+        SuccessResponse.item("data");
+        
+        //Create Response with list of item as payload
+        SuccessResponse.list(Arrays.asList("data1","data2"));
+        SuccessResponse.array(new String[]{"data1","data2"});
+        
+        //Create Response of error
+        FailResponse.error("Error message");
+    }
+}
+```
