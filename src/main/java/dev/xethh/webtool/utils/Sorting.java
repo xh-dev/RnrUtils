@@ -48,5 +48,20 @@ public class Sorting {
         public int hashCode() {
             return Objects.hash(field);
         }
+
+        @Override
+        public String toString() {
+            return "SortItem{" +
+                    "field='" + field + '\'' +
+                    ", direction=" + direction +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Sorting{" +
+                "items=" + items +
+                '}';
     }
 }

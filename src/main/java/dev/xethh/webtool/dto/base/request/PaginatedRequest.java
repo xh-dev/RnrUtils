@@ -39,7 +39,7 @@ public class PaginatedRequest extends Request {
         else if (s.equals("")) return Optional.empty();
         else {
             var matchPredicate = Pattern.compile("^[-]?[a-zA-Z._]+$").asMatchPredicate();
-            var processedString = Arrays.stream(s.split(",")).map(String::trim).collect(Collectors.toList());
+            var processedString = Arrays.stream(s.split(",")).map(String::trim).filter(it->!"".equals(it)).collect(Collectors.toList());
             return processedString.stream().allMatch(matchPredicate) ? Optional.of(String.join(",", processedString)) : Optional.empty();
         }
     }
