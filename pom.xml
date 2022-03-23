@@ -6,7 +6,7 @@
 
     <groupId>dev.xethh.webtools</groupId>
     <artifactId>RNRUtils</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
 
     <name>RNRUtils</name>
 
@@ -56,8 +56,13 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.4</version>
         </dependency>
     </dependencies>
 

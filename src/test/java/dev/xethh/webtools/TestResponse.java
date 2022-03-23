@@ -1,8 +1,7 @@
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.response.FailResponse;
-import dev.xethh.webtool.dto.base.response.Response;
-import dev.xethh.webtool.dto.base.response.SuccessResponse;
+import dev.xethh.webtools.dto.base.response.FailResponse;
+import dev.xethh.webtools.dto.base.response.SuccessResponse;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -13,10 +12,11 @@ import static org.junit.Assert.assertNotEquals;
 public class TestResponse {
     @Test
     public void TestErrorResponse(){
-        var response = FailResponse.error("error");
+        var response = FailResponse.error("ABCD", "error");
         assertNotNull(response);
         assertFalse(response.isSuccess());
         assertEquals("error", response.getMessage());
+        assertEquals("ABCD", response.getTraceId());
     }
 
     @Test

@@ -1,6 +1,6 @@
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.request.PaginatedRequest;
+import dev.xethh.webtools.dto.base.request.PaginatedRequest;
 
 public class DemoSorting {
     public static void main(String[] args){

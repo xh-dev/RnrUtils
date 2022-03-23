@@ -1,7 +1,7 @@
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.response.FailResponse;
-import dev.xethh.webtool.dto.base.response.SuccessResponse;
+import dev.xethh.webtools.dto.base.response.FailResponse;
+import dev.xethh.webtools.dto.base.response.SuccessResponse;
 
 import java.util.Arrays;
 
@@ -18,6 +18,6 @@ public class ResponseCreationDemo {
         SuccessResponse.array(new String[]{"data1","data2"});
 
         //Create Response of error
-        FailResponse.error("Error message");
+        FailResponse.error("Trace-ID", "Error message");
     }
 }

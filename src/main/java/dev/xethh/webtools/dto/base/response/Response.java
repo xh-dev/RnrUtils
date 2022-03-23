@@ -1,4 +1,4 @@
-package dev.xethh.webtool.dto.base.response;
+package dev.xethh.webtools.dto.base.response;
 
 public interface Response {
     boolean isSuccess();

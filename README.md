@@ -12,17 +12,18 @@ maven
 ## Demo
 
 ### Request creation
+
 ```java
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.request.PaginatedRequest;
-import dev.xethh.webtool.dto.base.request.Request;
+import dev.xethh.webtools.dto.base.request.PaginatedRequest;
+import dev.xethh.webtools.dto.base.request.Request;
 
 public class RequestCreationDemo {
     /**
      * Simple Request, just extends {@link Request}
      */
-    public static class SomeRequest extends Request{
+    public static class SomeRequest extends Request {
         private String fieldA;
 
         public String getFieldA() {
@@ -48,20 +49,21 @@ public class RequestCreationDemo {
             this.fieldB = fieldB;
         }
     }
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
     }
 }
 ```
 
 ### Paginated Request
+
 ```java
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.request.PaginatedRequest;
+import dev.xethh.webtools.dto.base.request.PaginatedRequest;
 
 public class DemoSorting {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         var request = new PaginatedRequest();
         request.setSorting("+b,c,-d");
         // Optional.empty
@@ -97,24 +99,25 @@ public class DemoSorting {
 ```
 
 ### Response creation
+
 ```java
-import dev.xethh.webtool.dto.base.response.FailResponse;
-import dev.xethh.webtool.dto.base.response.SuccessResponse;
+import dev.xethh.webtools.dto.base.response.FailResponse;
+import dev.xethh.webtools.dto.base.response.SuccessResponse;
 
 import java.util.Arrays;
 
 public class Demo {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         //Create Response without payload
         SuccessResponse.noPayload();
-        
+
         //Create Response with single item payload
         SuccessResponse.item("data");
-        
+
         //Create Response with list of item as payload
-        SuccessResponse.list(Arrays.asList("data1","data2"));
-        SuccessResponse.array(new String[]{"data1","data2"});
-        
+        SuccessResponse.list(Arrays.asList("data1", "data2"));
+        SuccessResponse.array(new String[]{"data1", "data2"});
+
         //Create Response of error
         FailResponse.error("Error message");
     }

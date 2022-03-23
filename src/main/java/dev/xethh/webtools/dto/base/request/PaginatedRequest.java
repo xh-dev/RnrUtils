@@ -1,13 +1,13 @@
-package dev.xethh.webtool.dto.base.request;
+package dev.xethh.webtools.dto.base.request;
 
-import dev.xethh.webtool.utils.Sorting;
+import dev.xethh.webtools.utils.Sorting;
 
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class PaginatedRequest extends Request {
-    private Integer page, pageSize = -1;
+    private Integer page =0, pageSize = 25;
     private String sorting;
 
     public Integer getPage() {

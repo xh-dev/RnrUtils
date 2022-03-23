@@ -1,7 +1,7 @@
 package dev.xethh.webtools;
 
-import dev.xethh.webtool.dto.base.request.PaginatedRequest;
-import dev.xethh.webtool.dto.base.request.Request;
+import dev.xethh.webtools.dto.base.request.PaginatedRequest;
+import dev.xethh.webtools.dto.base.request.Request;
 
 public class RequestCreationDemo {
     /**

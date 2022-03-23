@@ -1,4 +1,4 @@
-package dev.xethh.webtool.utils;
+package dev.xethh.webtools.utils;
 
 import java.util.ArrayList;
 import java.util.List;
