@@ -105,6 +105,7 @@ import dev.xethh.webtools.dto.base.response.FailResponse;
 import dev.xethh.webtools.dto.base.response.SuccessResponse;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Demo {
     public static void main(String[] args) {
@@ -112,14 +113,18 @@ public class Demo {
         SuccessResponse.noPayload();
 
         //Create Response with single item payload
-        SuccessResponse.item("data");
+        SuccessResponse.payload("data");
+        SuccessResponse.supplyPayload(() -> "data");
+        SuccessResponse.optionalPayload(Optional.of( "data"));
 
         //Create Response with list of item as payload
         SuccessResponse.list(Arrays.asList("data1", "data2"));
+        SuccessResponse.supplyList(()->Arrays.asList("data1","data2"));
         SuccessResponse.array(new String[]{"data1", "data2"});
+        SuccessResponse.supplyArray(()->Arrays.asList("data1","data2"));
 
         //Create Response of error
-        FailResponse.error("Error message");
+        FailResponse.error("Trace Id", "Error message");
     }
 }
 ```

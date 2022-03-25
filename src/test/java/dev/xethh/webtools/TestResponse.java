@@ -2,12 +2,15 @@ package dev.xethh.webtools;
 
 import dev.xethh.webtools.dto.base.response.FailResponse;
 import dev.xethh.webtools.dto.base.response.SuccessResponse;
+import dev.xethh.webtools.exception.EmptyPayload;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 
 public class TestResponse {
     @Test
@@ -30,11 +33,29 @@ public class TestResponse {
 
     @Test
     public void testItemResponse(){
-        var response = SuccessResponse.item(true);
+        var response = SuccessResponse.payload(true);
         assertNotNull(response);
         assertTrue(response.isSuccess());
         assertTrue(response.getPayload());
-        assertNotEquals(response, SuccessResponse.item(true));
+        assertNotEquals(response, SuccessResponse.payload(true));
+
+        assertThrows(EmptyPayload.class, ()->SuccessResponse.payload(null));
+
+        response = SuccessResponse.optionalPayload(Optional.of(true));
+        assertNotNull(response);
+        assertTrue(response.isSuccess());
+        assertTrue(response.getPayload());
+        assertNotEquals(response, SuccessResponse.payload(true));
+
+        assertThrows(EmptyPayload.class, ()->SuccessResponse.optionalPayload(Optional.empty()));
+
+        response = SuccessResponse.supplyPayload(()->true);
+        assertNotNull(response);
+        assertTrue(response.isSuccess());
+        assertTrue(response.getPayload());
+        assertNotEquals(response, SuccessResponse.payload(true));
+
+        assertThrows(EmptyPayload.class, ()->SuccessResponse.supplyPayload(()->{throw new EmptyPayload();}));
     }
 
     @Test
@@ -47,6 +68,19 @@ public class TestResponse {
             assertEquals(testIndex, index);
             testIndex++;
         }
+
+        assertThrows(NullPointerException.class, ()->SuccessResponse.array(null));
+
+        response = SuccessResponse.supplyArray(()->new Integer[]{1,2,3});
+        assertNotNull(response);
+        assertTrue(response.isSuccess());
+        testIndex = 1;
+        for(int index : response.getPayload()){
+            assertEquals(testIndex, index);
+            testIndex++;
+        }
+
+        assertThrows(NullPointerException.class, ()->SuccessResponse.supplyArray(()->null));
     }
     @Test
     public void testListResponse(){
@@ -58,5 +92,16 @@ public class TestResponse {
             assertEquals(testIndex, index);
             testIndex++;
         }
+        assertThrows(NullPointerException.class, ()->SuccessResponse.list(null));
+
+        response = SuccessResponse.supplyList(()->Arrays.asList(1,2,3));
+        assertNotNull(response);
+        assertTrue(response.isSuccess());
+        testIndex = 1;
+        for(int index : response.getPayload()){
+            assertEquals(testIndex, index);
+            testIndex++;
+        }
+        assertThrows(NullPointerException.class, ()->SuccessResponse.supplyList(null));
     }
 }

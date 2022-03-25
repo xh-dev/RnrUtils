@@ -11,7 +11,7 @@ public class ResponseCreationDemo {
         SuccessResponse.noPayload();
 
         //Create Response with single item payload
-        SuccessResponse.item("data");
+        SuccessResponse.payload("data");
 
         //Create Response with list of item as payload
         SuccessResponse.list(Arrays.asList("data1","data2"));

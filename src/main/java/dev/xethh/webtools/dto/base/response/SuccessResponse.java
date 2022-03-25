@@ -1,6 +1,6 @@
 package dev.xethh.webtools.dto.base.response;
 
-import dev.xethh.webtools.exception.NotFound;
+import dev.xethh.webtools.exception.EmptyPayload;
 import io.vavr.control.Try;
 
 import java.util.Arrays;
@@ -18,26 +18,28 @@ public class SuccessResponse implements Response {
         return SuccessResponse._instance;
     }
 
-    public static <Payload> ItemResponse<Payload> item(Optional<Payload> op) {
+    public static <Payload> ItemResponse<Payload> optionalPayload(Optional<Payload> op) {
         return Try.ofSupplier(() -> op).map(it -> {
                     if (it.isPresent()) {
                         return it.get();
                     } else {
-                        throw new NotFound();
+                        throw new EmptyPayload();
                     }
                 }
-        ).map(SuccessResponse::item).get();
+        ).map(SuccessResponse::payload).get();
     }
 
-    public static <Payload> ItemResponse<Payload> item(Supplier<Payload> op) {
-        return Try.ofSupplier(op).map(SuccessResponse::item).get();
+    public static <Payload> ItemResponse<Payload> supplyPayload(Supplier<Payload> op) {
+        return Try.ofSupplier(op).map(SuccessResponse::payload).get();
     }
 
-    public static <Payload> ItemResponse<Payload> item(Payload item) {
+    public static <Payload> ItemResponse<Payload> payload(Payload item) {
+        if(item == null)
+            throw new EmptyPayload();
         return new ItemResponse<>(item);
     }
 
-    public static <Payload> ListResponse<Payload> array(Supplier<Payload[]> op) {
+    public static <Payload> ListResponse<Payload> supplyArray(Supplier<Payload[]> op) {
         return Try.ofSupplier(op).map(SuccessResponse::array).get();
     }
 
@@ -45,12 +47,13 @@ public class SuccessResponse implements Response {
         return new ListResponse<>(Arrays.asList(item));
     }
 
-    public static <Payload> ListResponse<Payload> list(Supplier<List<Payload>> op) {
+    public static <Payload> ListResponse<Payload> supplyList(Supplier<List<Payload>> op) {
         return Try.ofSupplier(op).map(SuccessResponse::list).get();
     }
 
     public static <Payload> ListResponse<Payload> list(List<Payload> item) {
-        return new ListResponse<>(item);
+        if(item == null) throw new NullPointerException();
+        else return new ListResponse<>(item);
     }
 
     public boolean isSuccess() {
