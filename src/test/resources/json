@@ -1,0 +1,63 @@
+{
+  "int3": null,
+  "integer3": null,
+  "integer2": 22,
+  "pLong2": 22,
+  "pLong3": 0,
+  "long2": 33,
+  "long3": null,
+  "pDouble2": 1.3,
+  "double2": 1.4,
+  "pDouble3": null,
+  "double3": null,
+  "decimal2": 1.5,
+  "decimal3": null,
+  "pFloat2": 2.2,
+  "float2": 3.2,
+  "float3": null,
+  "string2": "updated string",
+  "string3": null,
+  "pFloat3": null,
+  "b2": false,
+  "b3": null,
+  "boolean2": false,
+  "boolean3": null,
+  "subClass": {
+    "line2": "updated l2",
+    "line3": null
+  },
+  "int2": 11,
+  "map2": {
+    "x": "xx",
+    "aa": "bb"
+  },
+  "map3": null,
+  "list2": [
+    {
+      "int1": 1001
+    },
+    {
+      "int1": 1002,
+      "int2": 1003
+    },
+    {
+      "int1": 1005,
+      "int2": 1006
+    }
+  ],
+  "list3": null,
+  "array2": [
+    {
+      "int1": 2001
+    },
+    {
+      "int1": 2002,
+      "int2": 3003
+    },
+    {
+      "int1": 3005,
+      "int2": 4006
+    }
+  ],
+  "array3": null
+}
