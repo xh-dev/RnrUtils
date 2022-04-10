@@ -20,10 +20,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -135,7 +132,12 @@ public class PartialEntityHelper {
                                         if (setterParameterType == String.class) {
                                             logger.info(String.format("Field[%s] update to  %s", key, value));
                                             setterMethod.invoke(t, value);
-                                        } else throw new RuntimeException("Setting typing not match");
+                                        } else{
+                                            logger.info(String.format("Field[%s] update to  %s", key, value));
+                                            value = objectMapper.readValue(String.format("\"%s\"", value), setterParameterType);
+                                            logger.info(String.format("Field[%s] update to  %s as %s", key, value, setterParameterType.getName()));
+                                            setterMethod.invoke(t, value);
+                                        } ;
                                     } else if (value instanceof Long) {
                                         if (setterParameterType == Long.class || setterParameterType == long.class) {
                                             logger.info(String.format("Field[%s] update to  %d", key, value));

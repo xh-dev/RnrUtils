@@ -69,6 +69,9 @@ public class Test2
         private Boolean boolean2;
         private Boolean boolean3;
         private SubClass subClass;
+        private UUID uuid1;
+        private UUID uuid2;
+        private UUID uuid3;
 
         private Map<String, String> map2;
         private Map<String, String> map3;
@@ -152,6 +155,9 @@ public class Test2
                     oTestData.setBoolean1(true);
                     oTestData.setBoolean2(true);
                     oTestData.setBoolean3(true);
+                    oTestData.setUuid1(UUID.fromString("d4fc3a97-7954-41aa-b81b-9f94ca76a422"));
+                    oTestData.setUuid2(UUID.fromString("0692aec2-925f-4130-9271-8a557e579ccb"));
+                    oTestData.setUuid3(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"));
                     SubClass subClass = Optional.of(new SubClass())
                             .map(oSubClass -> {
                                 oSubClass.setLine1("l1");
@@ -266,6 +272,11 @@ public class Test2
         assertEquals(true,testData.getBoolean2());
         assertEquals(true,testData.getBoolean3());
 
+        assertEquals(UUID.fromString("d4fc3a97-7954-41aa-b81b-9f94ca76a422"), testData.getUuid1());
+        assertEquals(UUID.fromString("0692aec2-925f-4130-9271-8a557e579ccb"), testData.getUuid2());
+        assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"), testData.getUuid3());
+
+
         assertEquals(true,testData.isB1());
         assertEquals(true,testData.isB2());
         assertEquals(true,testData.isB3());
@@ -351,6 +362,10 @@ public class Test2
         assertEquals(true,testData.getBoolean1());
         assertEquals(false,testData.getBoolean2());
         assertEquals(null,testData.getBoolean3());
+
+        assertEquals(null, testData.getUuid1());
+        assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"),testData.getUuid2());
+        assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"),testData.getUuid3());
 
         assertEquals(true,testData.isB1());
         assertEquals(false,testData.isB2());

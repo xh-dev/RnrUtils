@@ -22,6 +22,8 @@
   "b3": null,
   "boolean2": false,
   "boolean3": null,
+  "uuid1":null,
+  "uuid2":"d67b776f-cf47-417e-8876-6f5749a4ed04",
   "subClass": {
     "line2": "updated l2",
     "line3": null
