@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import dev.xethh.webtools.utils.patch.PartialEntityHelper;
+import dev.xethh.webtools.utils.patch.PartialEntityUtils;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
 
 import java.io.IOException;
@@ -25,21 +25,21 @@ public class PartialEntityDeserializer extends JsonDeserializer<PartialEntity> {
     public PartialEntity deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
         switch (jsonParser.getCurrentToken()){
             case START_OBJECT:
-                return PartialEntityHelper.entityOf(jsonParser.readValueAs(new TypeReference<Map<String, Object>>() {
+                return PartialEntityUtils.entityOf(jsonParser.readValueAs(new TypeReference<Map<String, Object>>() {
                 }));
             case VALUE_NULL:
-                return PartialEntityHelper.entityOf(null);
+                return PartialEntityUtils.entityOf(null);
             case VALUE_FALSE:
             case VALUE_TRUE:
-                return PartialEntityHelper.entityOf(jsonParser.readValueAs(Boolean.class));
+                return PartialEntityUtils.entityOf(jsonParser.readValueAs(Boolean.class));
             case VALUE_STRING:
-                return PartialEntityHelper.entityOf(jsonParser.readValueAs(String.class));
+                return PartialEntityUtils.entityOf(jsonParser.readValueAs(String.class));
             case VALUE_NUMBER_FLOAT:
-                return PartialEntityHelper.entityOf(jsonParser.getDecimalValue());
+                return PartialEntityUtils.entityOf(jsonParser.getDecimalValue());
             case VALUE_NUMBER_INT:
-                return PartialEntityHelper.entityOf(jsonParser.readValueAs(Long.class));
+                return PartialEntityUtils.entityOf(jsonParser.readValueAs(Long.class));
             case START_ARRAY:
-                return PartialEntityHelper.entityOf(jsonParser.readValueAs(new TypeReference<List<Map<String,Object>>>() {
+                return PartialEntityUtils.entityOf(jsonParser.readValueAs(new TypeReference<List<Map<String,Object>>>() {
                 }));
         }
         return null;

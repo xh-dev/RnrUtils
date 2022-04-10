@@ -318,8 +318,8 @@ public class PartialEntityTest
         assertEquals(Integer.valueOf(1300), testData.getArray3()[1].getInt2());
 
 
-        PartialEntityHelper.setObjectMapper(om);
-        PartialEntityHelper.merge(testData, partialData);
+        PartialEntityUtils.setObjectMapper(om);
+        PartialEntityUtils.patch(testData, partialData);
         // Test after merge
 
         assertEquals(1,testData.getInt1());

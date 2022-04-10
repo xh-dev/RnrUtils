@@ -77,7 +77,7 @@ public class BasicPartialEntityTest
         logger.info("Before partial update: ");
         logger.info(profile.toString());
 
-        PartialEntityHelper.merge(profile, partialData);
+        PartialEntityUtils.patch(profile, partialData);
 
         logger.info("After partial update: ");
         logger.info(profile.toString());

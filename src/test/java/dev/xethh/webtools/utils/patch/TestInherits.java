@@ -66,7 +66,7 @@ public class TestInherits {
         assertEquals("ABC",data1.username);
         assertEquals("b@b.com",data1.email);
 
-        PartialEntityHelper.merge(data1, p);
+        PartialEntityUtils.patch(data1, p);
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data1.getId().toString());
         assertEquals("ABC",data1.username);
@@ -84,7 +84,7 @@ public class TestInherits {
         assertEquals("ABC",data2.username);
         assertEquals("b@b.com",data2.email);
 
-        PartialEntityHelper.merge(data2, p);
+        PartialEntityUtils.patch(data2, p);
 
         assertNull(data2.getId());
         assertEquals("ABC",data2.username);

@@ -51,7 +51,7 @@ public class TestListPatchPatch {
         assertEquals("b@b.com",data.email);
 
         PartialArrayEntity arrayEntity = p.asArrayEntity();
-        dataList = PartialEntityHelper.mergeList(dataList, arrayEntity);
+        dataList = PartialEntityUtils.patchList(dataList, arrayEntity);
         data = dataList.get(0);
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data.id.toString());

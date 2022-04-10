@@ -9,7 +9,6 @@ import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import org.junit.Test;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -48,7 +47,7 @@ public class TestSkipPatch {
         assertEquals("ABC",data.username);
         assertEquals("b@b.com",data.email);
 
-        PartialEntityHelper.merge(data, p);
+        PartialEntityUtils.patch(data, p);
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data.id.toString());
         assertEquals("ABC",data.username);

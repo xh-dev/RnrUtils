@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PartialEntityHelper {
-    private static final Logger logger = LoggerFactory.getLogger(PartialEntityHelper.class);
+public class PartialEntityUtils {
+    private static final Logger logger = LoggerFactory.getLogger(PartialEntityUtils.class);
     public static ObjectMapper objectMapper;
 
     public static void setObjectMapper(ObjectMapper objectMapper) {
-        PartialEntityHelper.objectMapper = objectMapper;
+        PartialEntityUtils.objectMapper = objectMapper;
     }
 
     public static PartialEntity entityOf(Object obj) {
@@ -53,17 +53,17 @@ public class PartialEntityHelper {
         }
     }
 
-    public static <T> T merge(T t, PartialObjectEntity deltaChange) {
-        return (T) internalMerge(t, deltaChange);
+    public static <T> T patch(T t, PartialObjectEntity deltaChange) {
+        return (T) internalPatch(t, deltaChange);
     }
 
-    public static <T> List<T> mergeList(List<T> list, PartialArrayEntity deltaChange) {
+    public static <T> List<T> patchList(List<T> list, PartialArrayEntity deltaChange) {
         if (list.size() != deltaChange.get().size()) {
             throw new RuntimeException("Not match");
         }
         List<T> newList = new ArrayList<>(list);
         for (int i = 0; i < list.size(); i++) {
-            newList.add(i, merge(list.get(i), deltaChange.get().get(i)));
+            newList.add(i, patch(list.get(i), deltaChange.get().get(i)));
         }
         return newList;
     }
@@ -76,7 +76,7 @@ public class PartialEntityHelper {
         return list;
     }
 
-    protected static Object internalMerge(Object t, PartialEntity deltaChange) {
+    protected static Object internalPatch(Object t, PartialEntity deltaChange) {
         Map<String, Field> fields = getAllDeclaredFields(t.getClass()).stream().filter(it -> it.getAnnotation(SkipPatch.class) != null).collect(Collectors.toMap(i -> i.getName().toLowerCase(), i -> i));
         Try<Map<String, Method>> result = Try.of(() -> t.getClass().getMethods())
                 .filter(it -> deltaChange instanceof PartialObjectEntity) // Only PartialObjectEntity could patch with instance
@@ -199,7 +199,7 @@ public class PartialEntityHelper {
                                         } else {
                                             logger.info("Update sub object: " + key);
                                             Object subObject = t.getClass().getMethod("g" + setterMethod.getName().substring(1)).invoke(t);
-                                            PartialEntityHelper.internalMerge(subObject, PartialEntityHelper.entityOf(value));
+                                            PartialEntityUtils.internalPatch(subObject, PartialEntityUtils.entityOf(value));
                                         }
                                     } else throw new RuntimeException("No matching found");
                                 } else throw new RuntimeException("unexpected field contained in the upload data");
