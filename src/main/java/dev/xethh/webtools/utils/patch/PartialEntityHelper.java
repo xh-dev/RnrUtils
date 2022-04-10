@@ -4,6 +4,7 @@ package dev.xethh.webtools.utils.patch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.xethh.webtools.utils.patch.annotation.ListContent;
 import dev.xethh.webtools.utils.patch.annotation.SkipPatch;
+import dev.xethh.webtools.utils.patch.partialEntity.PartialArrayEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.impl.PartialArrayEntityImpl;
@@ -19,9 +20,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class PartialEntityHelper {
@@ -39,7 +42,12 @@ public class PartialEntityHelper {
             if (obj instanceof Map) {
                 return new PartialObjectEntityImpl((Map<String, Object>) obj);
             } else if (obj instanceof List) {
-                return new PartialArrayEntityImpl((List<Object>) obj);
+                List<PartialObjectEntity> list = ((List<Map<String, Object>>) obj)
+                        .stream()
+                        .map(PartialObjectEntityImpl::new)
+                        .map(it->(PartialObjectEntity)it)
+                        .collect(Collectors.toList());
+                return new PartialArrayEntityImpl(list);
             } else {
                 return new PartialBaseEntityImpl(obj);
             }
@@ -47,7 +55,22 @@ public class PartialEntityHelper {
     }
 
     public static <T> T merge(T t, PartialEntity deltaChange) {
+        // if(t instanceof List){
+        //     return objectMapper.readValue(deltaChange.toJson(), Array);
+        // } else {
         return (T) internalMerge(t, deltaChange);
+        // }
+    }
+
+    public static <T> List<T> mergeList(List<T> list, PartialArrayEntity deltaChange) {
+        if(list.size() != deltaChange.get().size()){
+            throw new RuntimeException("Not match");
+        }
+        List<T> newList = new ArrayList<>(list);
+        for(int i=0;i<list.size();i++){
+            newList.add(i,merge(list.get(i), deltaChange.get().get(i)));
+        }
+        return newList;
     }
 
     private static List<Field> getAllDeclaredFields(Class<?> clazz){

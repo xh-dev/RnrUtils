@@ -35,6 +35,9 @@ public interface PartialEntity {
         return !isBaseValue();
     }
 
+    PartialArrayEntity asArrayEntity();
+    PartialObjectEntity asObjectEntity();
+
     String toJson();
 
 }
