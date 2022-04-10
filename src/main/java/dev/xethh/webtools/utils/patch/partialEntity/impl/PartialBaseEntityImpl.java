@@ -6,7 +6,7 @@ import dev.xethh.webtools.utils.patch.partialEntity.PartialArrayEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialBaseEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 
-public class PartialBaseEntityImpl extends AbstractPartialEntity implements PartialBaseEntity {
+public class PartialBaseEntityImpl extends AbstractPartialEntity<Object> implements PartialBaseEntity {
     public PartialBaseEntityImpl(Object obj) {
         super(obj);
     }

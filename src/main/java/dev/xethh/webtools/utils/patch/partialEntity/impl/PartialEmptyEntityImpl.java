@@ -6,7 +6,7 @@ import dev.xethh.webtools.utils.patch.partialEntity.PartialArrayEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEmptyEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 
-public class PartialEmptyEntityImpl extends AbstractPartialEntity implements PartialEmptyEntity {
+public class PartialEmptyEntityImpl extends AbstractPartialEntity<Object> implements PartialEmptyEntity {
 
     public PartialEmptyEntityImpl() {
         super(null);

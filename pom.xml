@@ -6,7 +6,7 @@
 
     <groupId>dev.xethh.webtools</groupId>
     <artifactId>RNRUtils</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6-snapshot</version>
 
     <name>RNRUtils</name>
 

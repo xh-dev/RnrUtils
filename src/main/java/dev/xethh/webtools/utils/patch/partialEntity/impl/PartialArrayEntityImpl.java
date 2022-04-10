@@ -7,15 +7,16 @@ import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 
 import java.util.List;
+import java.util.Map;
 
-public class PartialArrayEntityImpl extends AbstractPartialEntity implements PartialArrayEntity {
+public class PartialArrayEntityImpl extends AbstractPartialEntity<List<PartialObjectEntity>> implements PartialArrayEntity {
     public PartialArrayEntityImpl(List<PartialObjectEntity> obj) {
         super(obj);
     }
 
     @Override
     public List<PartialObjectEntity> get() {
-        return (List<PartialObjectEntity>) obj;
+        return obj;
     }
 
     @Override

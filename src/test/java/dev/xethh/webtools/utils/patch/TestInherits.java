@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import dev.xethh.webtools.utils.patch.annotation.SkipPatch;
 import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
+import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import lombok.Data;
 import org.junit.Test;
 
@@ -56,7 +57,7 @@ public class TestInherits {
                     return it;
                 }).get();
         String jsonStr = "{\"id\":null,\"username\":\"xxx\",\"email\":\"c@c.com\"}";
-        PartialEntity p = om.readValue(jsonStr, PartialEntity.class);
+        PartialObjectEntity p = om.readValue(jsonStr, PartialEntity.class).asObjectEntity();
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data1.getId().toString());
         assertEquals("ABC",data1.username);
@@ -74,7 +75,7 @@ public class TestInherits {
             it.setEmail("b@b.com");
             return it;
         }).get();
-        p = om.readValue(jsonStr, PartialEntity.class);
+        p = om.readValue(jsonStr, PartialEntity.class).asObjectEntity();
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data2.getId().toString());
         assertEquals("ABC",data2.username);

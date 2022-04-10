@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
+import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import lombok.Data;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -58,7 +59,7 @@ public class Test1
 
     @Test
     public void simpleTest() throws Throwable {
-        PartialEntity partialData = om.readValue("{\"email\":null, \"address\":{\"line1\":\"updated line 1\", \"line2\":null}}", PartialEntity.class);
+        PartialObjectEntity partialData = om.readValue("{\"email\":null, \"address\":{\"line1\":\"updated line 1\", \"line2\":null}}", PartialEntity.class).asObjectEntity();
 
         Logger logger = LoggerFactory.getLogger(this.getClass());
         Profile profile = Optional.of(new Profile()).map(p->{

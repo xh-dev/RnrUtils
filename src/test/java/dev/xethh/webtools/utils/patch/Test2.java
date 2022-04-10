@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import dev.xethh.webtools.utils.patch.annotation.ListContent;
 import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
+import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -112,7 +113,7 @@ public class Test2
     public void simpleTest() throws Throwable {
         InputStream data = getClass().getClassLoader().getResourceAsStream("json");
         String jsonString = IOUtils.toString(data, StandardCharsets.UTF_8);
-        PartialEntity partialData = om.readValue(jsonString, PartialEntity.class);
+        PartialObjectEntity partialData = om.readValue(jsonString, PartialEntity.class).asObjectEntity();
         TestData testData = Optional.of(new TestData())
                 .map(oTestData->{
                     oTestData.setInt1(1);

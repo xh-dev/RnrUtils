@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import dev.xethh.webtools.utils.patch.annotation.SkipPatch;
 import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
+import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import org.junit.Test;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,7 +42,7 @@ public class TestSkipPatch {
                     return it;
                 }).get();
         String jsonStr = "{\"id\":null,\"username\":\"xxx\",\"email\":\"c@c.com\"}";
-        PartialEntity p = om.readValue(jsonStr, PartialEntity.class);
+        PartialObjectEntity p = om.readValue(jsonStr, PartialEntity.class).asObjectEntity();
 
         assertEquals("8dadeb09-22e6-469b-aefe-f6ffb5a4a281",data.id.toString());
         assertEquals("ABC",data.username);

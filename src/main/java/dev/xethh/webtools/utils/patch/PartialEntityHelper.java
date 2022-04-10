@@ -54,12 +54,8 @@ public class PartialEntityHelper {
         }
     }
 
-    public static <T> T merge(T t, PartialEntity deltaChange) {
-        // if(t instanceof List){
-        //     return objectMapper.readValue(deltaChange.toJson(), Array);
-        // } else {
+    public static <T> T merge(T t, PartialObjectEntity deltaChange) {
         return (T) internalMerge(t, deltaChange);
-        // }
     }
 
     public static <T> List<T> mergeList(List<T> list, PartialArrayEntity deltaChange) {
