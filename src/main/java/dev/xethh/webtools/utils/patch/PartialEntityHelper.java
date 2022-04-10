@@ -20,8 +20,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PartialEntityHelper {
@@ -42,7 +44,7 @@ public class PartialEntityHelper {
                 List<PartialObjectEntity> list = ((List<Map<String, Object>>) obj)
                         .stream()
                         .map(PartialObjectEntityImpl::new)
-                        .map(it->(PartialObjectEntity)it)
+                        .map(it -> (PartialObjectEntity) it)
                         .collect(Collectors.toList());
                 return new PartialArrayEntityImpl(list);
             } else {
@@ -56,19 +58,19 @@ public class PartialEntityHelper {
     }
 
     public static <T> List<T> mergeList(List<T> list, PartialArrayEntity deltaChange) {
-        if(list.size() != deltaChange.get().size()){
+        if (list.size() != deltaChange.get().size()) {
             throw new RuntimeException("Not match");
         }
         List<T> newList = new ArrayList<>(list);
-        for(int i=0;i<list.size();i++){
-            newList.add(i,merge(list.get(i), deltaChange.get().get(i)));
+        for (int i = 0; i < list.size(); i++) {
+            newList.add(i, merge(list.get(i), deltaChange.get().get(i)));
         }
         return newList;
     }
 
-    private static List<Field> getAllDeclaredFields(Class<?> clazz){
+    private static List<Field> getAllDeclaredFields(Class<?> clazz) {
         List<Field> list = Arrays.stream(clazz.getDeclaredFields()).collect(Collectors.toList());
-        if(clazz.getSuperclass() != Object.class){
+        if (clazz.getSuperclass() != Object.class) {
             list.addAll(getAllDeclaredFields(clazz.getSuperclass()));
         }
         return list;
@@ -91,7 +93,7 @@ public class PartialEntityHelper {
                                 final String fieldName = deltaChangeEntry.getKey().toLowerCase();
 
                                 if (fieldNameAndSetterMethod.containsKey(fieldName)) { // if the map contains key,
-                                    if (fields.containsKey(fieldName) || fieldNameAndSetterMethod.get(fieldName).getAnnotation(SkipPatch.class)!=null) {
+                                    if (fields.containsKey(fieldName) || fieldNameAndSetterMethod.get(fieldName).getAnnotation(SkipPatch.class) != null) {
                                         logger.info("skipped: " + fieldName);
                                         continue;
                                     }
@@ -100,6 +102,7 @@ public class PartialEntityHelper {
                                     Class<?> setterParameterType = setterMethod.getParameterTypes()[0];
                                     Object value = deltaChangeEntry.getValue();
                                     String key = deltaChangeEntry.getKey();
+
                                     if (value == null) { // set to null ignore the typing
                                         if (setterParameterType.isPrimitive()) {
                                             if (setterParameterType == int.class) {
@@ -132,12 +135,13 @@ public class PartialEntityHelper {
                                         if (setterParameterType == String.class) {
                                             logger.info(String.format("Field[%s] update to  %s", key, value));
                                             setterMethod.invoke(t, value);
-                                        } else{
+                                        } else {
                                             logger.info(String.format("Field[%s] update to  %s", key, value));
                                             value = objectMapper.readValue(String.format("\"%s\"", value), setterParameterType);
                                             logger.info(String.format("Field[%s] update to  %s as %s", key, value, setterParameterType.getName()));
                                             setterMethod.invoke(t, value);
-                                        } ;
+                                        }
+                                        ;
                                     } else if (value instanceof Long) {
                                         if (setterParameterType == Long.class || setterParameterType == long.class) {
                                             logger.info(String.format("Field[%s] update to  %d", key, value));
@@ -216,15 +220,16 @@ public class PartialEntityHelper {
         if (objectMapper == null) {
             throw new RuntimeException("Object mapper not set for merging list data");
         }
-         if (setterClass.isArray()) {
+        if (setterClass.isArray()) {
             Class<?> typeOfArray = setterClass.getComponentType();
-             logger.info(String.format("Field[%s] update to  array", fieldName));
-             Object[] array = value.stream().map(it -> objectMapper.convertValue(it, typeOfArray)).toArray();
-             Object[] arrays = (Object[]) Array.newInstance(typeOfArray, array.length);
-             System.arraycopy(array, 0, arrays, 0, array.length);
+            logger.info(String.format("Field[%s] update to  array", fieldName));
+            Object[] array = value.stream().map(it -> objectMapper.convertValue(it, typeOfArray)).toArray();
+            Object[] arrays = (Object[]) Array.newInstance(typeOfArray, array.length);
+            System.arraycopy(array, 0, arrays, 0, array.length);
             setter.invoke(target, (Object) arrays);
         } else throw new RuntimeException("Setting typing not match");
     }
+
     private static void processList(Object target, List<Map<String, Object>> value, Method setter, Class<?> setterClass, String fieldName) throws InvocationTargetException, IllegalAccessException {
         if (objectMapper == null) {
             throw new RuntimeException("Object mapper not set for merging list data");

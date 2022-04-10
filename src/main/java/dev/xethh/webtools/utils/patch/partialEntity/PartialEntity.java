@@ -10,7 +10,7 @@ import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
  * The PartialEntity is deserialized using JsonPatchDataDeserializer.
  */
 @JsonDeserialize(using = PartialEntityDeserializer.class)
-public interface PartialEntity<A> {
+public interface PartialEntity {
     boolean isArray();
 
     default boolean isNotArray() {

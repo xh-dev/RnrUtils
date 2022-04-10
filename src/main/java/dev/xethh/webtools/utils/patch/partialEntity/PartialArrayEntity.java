@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface PartialArrayEntity extends PartialEntity<List<PartialObjectEntity>> {
+public interface PartialArrayEntity extends PartialEntity {
     List<PartialObjectEntity> get();
     default <T> List<T> getField(Function<Map<String,Object>, T> function){
         return get().stream().map(it->it.getFields(function)).collect(Collectors.toList());

@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * Unit test for simple App.
  */
-public class Test1
+public class BasicPartialEntityTest
 {
     @Data
     public static class Profile{

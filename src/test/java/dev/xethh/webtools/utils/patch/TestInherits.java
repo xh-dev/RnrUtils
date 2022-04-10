@@ -8,6 +8,7 @@ import dev.xethh.webtools.utils.patch.deserializer.PartialEntityDeserializer;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialEntity;
 import dev.xethh.webtools.utils.patch.partialEntity.PartialObjectEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.junit.Test;
 
 import java.util.Optional;
@@ -29,7 +30,8 @@ public class TestInherits {
         @SkipPatch
         private UUID id;
     }
-    @lombok.Data
+    @EqualsAndHashCode(callSuper = true)
+    @Data
     public static class Data1 extends Supper1{
         @SkipPatch
         private String username;
@@ -40,7 +42,8 @@ public class TestInherits {
     public static class Supper2{
         private UUID id;
     }
-    @lombok.Data
+    @EqualsAndHashCode(callSuper = true)
+    @Data
     public static class Data2 extends Supper2{
         @SkipPatch
         private String username;

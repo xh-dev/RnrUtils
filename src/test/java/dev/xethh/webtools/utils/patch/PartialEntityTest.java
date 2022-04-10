@@ -15,13 +15,12 @@ import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Unit test for simple App.
  */
-public class Test2
+public class PartialEntityTest
 {
     public static ObjectMapper om = new ObjectMapper();
     static {
@@ -115,6 +114,7 @@ public class Test2
     @Test
     public void simpleTest() throws Throwable {
         InputStream data = getClass().getClassLoader().getResourceAsStream("json");
+        assert data != null;
         String jsonString = IOUtils.toString(data, StandardCharsets.UTF_8);
         PartialObjectEntity partialData = om.readValue(jsonString, PartialEntity.class).asObjectEntity();
         TestData testData = Optional.of(new TestData())
@@ -235,23 +235,23 @@ public class Test2
         assertEquals(1,testData.getInt1());
         assertEquals(2,testData.getInt2());
         assertEquals(3,testData.getInt3());
-        assertEquals(new Integer(1),testData.getInteger1());
-        assertEquals(new Integer(2),testData.getInteger2());
-        assertEquals(new Integer(3),testData.getInteger3());
+        assertEquals(Integer.valueOf(1),testData.getInteger1());
+        assertEquals(Integer.valueOf(2),testData.getInteger2());
+        assertEquals(Integer.valueOf(3),testData.getInteger3());
 
         assertEquals(1L,testData.getPLong1());
         assertEquals(2L,testData.getPLong2());
         assertEquals(3L,testData.getPLong3());
-        assertEquals(new Long(1),testData.getLong1());
-        assertEquals(new Long(2),testData.getLong2());
-        assertEquals(new Long(3),testData.getLong3());
+        assertEquals(Long.valueOf(1),testData.getLong1());
+        assertEquals(Long.valueOf(2),testData.getLong2());
+        assertEquals(Long.valueOf(3),testData.getLong3());
 
         assertEquals(1.1,testData.getPDouble1(), 0.001);
         assertEquals(1.2,testData.getPDouble2(), 0.001);
         assertEquals(1.3,testData.getPDouble3(), 0.001);
-        assertEquals(new Double(1.1),testData.getDouble1());
-        assertEquals(new Double(1.2),testData.getDouble2());
-        assertEquals(new Double(1.3),testData.getDouble3());
+        assertEquals(Double.valueOf(1.1),testData.getDouble1());
+        assertEquals(Double.valueOf(1.2),testData.getDouble2());
+        assertEquals(Double.valueOf(1.3),testData.getDouble3());
 
         assertEquals(new BigDecimal("1.1"),testData.getDecimal1());
         assertEquals(new BigDecimal("1.2"),testData.getDecimal2());
@@ -260,9 +260,9 @@ public class Test2
         assertEquals(1.1f,testData.getPFloat1(), 0.001);
         assertEquals(1.2f,testData.getPFloat2(), 0.001);
         assertEquals(1.3f,testData.getPFloat3(), 0.001);
-        assertEquals(new Float(1.1f),testData.getFloat1());
-        assertEquals(new Float(1.2f),testData.getFloat2());
-        assertEquals(new Float(1.3f),testData.getFloat3());
+        assertEquals(Float.valueOf(1.1f),testData.getFloat1());
+        assertEquals(Float.valueOf(1.2f),testData.getFloat2());
+        assertEquals(Float.valueOf(1.3f),testData.getFloat3());
 
         assertEquals("1",testData.getString1());
         assertEquals("2",testData.getString2());
@@ -277,45 +277,45 @@ public class Test2
         assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"), testData.getUuid3());
 
 
-        assertEquals(true,testData.isB1());
-        assertEquals(true,testData.isB2());
-        assertEquals(true,testData.isB3());
+        assertTrue(testData.isB1());
+        assertTrue(testData.isB2());
+        assertTrue(testData.isB3());
         assertEquals("l1",testData.getSubClass().getLine1());
         assertEquals("l2",testData.getSubClass().getLine2());
         assertEquals("l3",testData.getSubClass().getLine3());
 
 
         assertEquals(1, testData.getMap2().size());
-        assertEquals(true, testData.getMap2().containsKey("a"));
+        assertTrue(testData.getMap2().containsKey("a"));
         assertEquals("b", testData.getMap2().get("a"));
 
         assertEquals(1, testData.getMap3().size());
-        assertEquals(true, testData.getMap3().containsKey("c"));
+        assertTrue(testData.getMap3().containsKey("c"));
         assertEquals("d", testData.getMap3().get("c"));
 
         assertEquals(2, testData.getList2().size());
-        assertEquals(new Integer(100), ((ContainedData)testData.getList2().get(0)).getInt1());
-        assertEquals(new Integer(100), ((ContainedData)testData.getList2().get(0)).getInt2());
-        assertEquals(new Integer(200), ((ContainedData)testData.getList2().get(1)).getInt1());
-        assertEquals(new Integer(300), ((ContainedData)testData.getList2().get(1)).getInt2());
+        assertEquals(Integer.valueOf(100), testData.getList2().get(0).getInt1());
+        assertEquals(Integer.valueOf(100), testData.getList2().get(0).getInt2());
+        assertEquals(Integer.valueOf(200), testData.getList2().get(1).getInt1());
+        assertEquals(Integer.valueOf(300), testData.getList2().get(1).getInt2());
 
         assertEquals(2, testData.getList3().size());
-        assertEquals(new Integer(100), ((ContainedData)testData.getList2().get(0)).getInt1());
-        assertEquals(new Integer(100), ((ContainedData)testData.getList2().get(0)).getInt2());
-        assertEquals(new Integer(200), ((ContainedData)testData.getList2().get(1)).getInt1());
-        assertEquals(new Integer(300), ((ContainedData)testData.getList2().get(1)).getInt2());
+        assertEquals(Integer.valueOf(100), testData.getList2().get(0).getInt1());
+        assertEquals(Integer.valueOf(100), testData.getList2().get(0).getInt2());
+        assertEquals(Integer.valueOf(200), testData.getList2().get(1).getInt1());
+        assertEquals(Integer.valueOf(300), testData.getList2().get(1).getInt2());
 
         assertEquals(2, testData.getArray2().length);
-        assertEquals(new Integer(1100), ((ContainedData)testData.getArray2()[0]).getInt1());
-        assertEquals(new Integer(1100), ((ContainedData)testData.getArray2()[0]).getInt2());
-        assertEquals(new Integer(1200), ((ContainedData)testData.getArray2()[1]).getInt1());
-        assertEquals(new Integer(1300), ((ContainedData)testData.getArray2()[1]).getInt2());
+        assertEquals(Integer.valueOf(1100), testData.getArray2()[0].getInt1());
+        assertEquals(Integer.valueOf(1100), testData.getArray2()[0].getInt2());
+        assertEquals(Integer.valueOf(1200), testData.getArray2()[1].getInt1());
+        assertEquals(Integer.valueOf(1300), testData.getArray2()[1].getInt2());
 
         assertEquals(2, testData.getArray3().length);
-        assertEquals(new Integer(1100), ((ContainedData)testData.getArray3()[0]).getInt1());
-        assertEquals(new Integer(1100), ((ContainedData)testData.getArray3()[0]).getInt2());
-        assertEquals(new Integer(1200), ((ContainedData)testData.getArray3()[1]).getInt1());
-        assertEquals(new Integer(1300), ((ContainedData)testData.getArray3()[1]).getInt2());
+        assertEquals(Integer.valueOf(1100), testData.getArray3()[0].getInt1());
+        assertEquals(Integer.valueOf(1100), testData.getArray3()[0].getInt2());
+        assertEquals(Integer.valueOf(1200), testData.getArray3()[1].getInt1());
+        assertEquals(Integer.valueOf(1300), testData.getArray3()[1].getInt2());
 
 
         PartialEntityHelper.setObjectMapper(om);
@@ -326,80 +326,80 @@ public class Test2
         assertEquals(11,testData.getInt2());
         assertEquals(0,testData.getInt3());
 
-        assertEquals(new Integer(1),testData.getInteger1());
-        assertEquals(new Integer(22),testData.getInteger2());
-        assertEquals(null,testData.getInteger3());
+        assertEquals(Integer.valueOf(1),testData.getInteger1());
+        assertEquals(Integer.valueOf(22),testData.getInteger2());
+        assertNull(testData.getInteger3());
 
         assertEquals(1L,testData.getPLong1());
         assertEquals(22L,testData.getPLong2());
         assertEquals(0L,testData.getPLong3());
-        assertEquals(new Long(1),testData.getLong1());
-        assertEquals(new Long(33),testData.getLong2());
-        assertEquals(null,testData.getLong3());
+        assertEquals(Long.valueOf(1),testData.getLong1());
+        assertEquals(Long.valueOf(33),testData.getLong2());
+        assertNull(testData.getLong3());
 
         assertEquals(1.1,testData.getPDouble1(), 0.001);
         assertEquals(1.3,testData.getPDouble2(), 0.001);
         assertEquals(0,testData.getPDouble3(), 0.001);
-        assertEquals(new Double(1.1),testData.getDouble1());
-        assertEquals(new Double(1.4),testData.getDouble2());
-        assertEquals(null,testData.getDouble3());
+        assertEquals(Double.valueOf(1.1),testData.getDouble1());
+        assertEquals(Double.valueOf(1.4),testData.getDouble2());
+        assertNull(testData.getDouble3());
 
         assertEquals(new BigDecimal("1.1"),testData.getDecimal1());
         assertEquals(new BigDecimal("1.5"),testData.getDecimal2());
-        assertEquals(null,testData.getDecimal3());
+        assertNull(testData.getDecimal3());
 
         assertEquals(1.1f,testData.getPFloat1(), 0.001);
         assertEquals(2.2f,testData.getPFloat2(), 0.001);
         assertEquals(0f,testData.getPFloat3(), 0.001);
-        assertEquals(new Float(1.1f),testData.getFloat1());
-        assertEquals(new Float(3.2f),testData.getFloat2());
-        assertEquals(null,testData.getFloat3());
+        assertEquals(Float.valueOf(1.1f),testData.getFloat1());
+        assertEquals(Float.valueOf(3.2f),testData.getFloat2());
+        assertNull(testData.getFloat3());
 
         assertEquals("1",testData.getString1());
         assertEquals("updated string",testData.getString2());
-        assertEquals(null,testData.getString3());
+        assertNull(testData.getString3());
 
         assertEquals(true,testData.getBoolean1());
         assertEquals(false,testData.getBoolean2());
-        assertEquals(null,testData.getBoolean3());
+        assertNull(testData.getBoolean3());
 
-        assertEquals(null, testData.getUuid1());
+        assertNull(testData.getUuid1());
         assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"),testData.getUuid2());
         assertEquals(UUID.fromString("d67b776f-cf47-417e-8876-6f5749a4ed04"),testData.getUuid3());
 
-        assertEquals(true,testData.isB1());
-        assertEquals(false,testData.isB2());
-        assertEquals(false,testData.isB3());
+        assertTrue(testData.isB1());
+        assertFalse(testData.isB2());
+        assertFalse(testData.isB3());
         assertEquals("l1",testData.getSubClass().getLine1());
         assertEquals("updated l2",testData.getSubClass().getLine2());
-        assertEquals(null,testData.getSubClass().getLine3());
+        assertNull(testData.getSubClass().getLine3());
 
 
         assertEquals(2, testData.getMap2().size());
-        assertEquals(true, testData.getMap2().containsKey("x"));
+        assertTrue(testData.getMap2().containsKey("x"));
         assertEquals("xx", testData.getMap2().get("x"));
-        assertEquals(true, testData.getMap2().containsKey("aa"));
+        assertTrue(testData.getMap2().containsKey("aa"));
         assertEquals("bb", testData.getMap2().get("aa"));
 
         assertNull(testData.getMap3());
 
         assertEquals(3, testData.getList2().size());
-        assertEquals(new Integer(1001), ((ContainedData)testData.getList2().get(0)).getInt1());
-        assertEquals(null, ((ContainedData)testData.getList2().get(0)).getInt2());
-        assertEquals(new Integer(1002), ((ContainedData)testData.getList2().get(1)).getInt1());
-        assertEquals(new Integer(1003), ((ContainedData)testData.getList2().get(1)).getInt2());
-        assertEquals(new Integer(1005), ((ContainedData)testData.getList2().get(2)).getInt1());
-        assertEquals(new Integer(1006), ((ContainedData)testData.getList2().get(2)).getInt2());
+        assertEquals(Integer.valueOf(1001), testData.getList2().get(0).getInt1());
+        assertNull(testData.getList2().get(0).getInt2());
+        assertEquals(Integer.valueOf(1002), testData.getList2().get(1).getInt1());
+        assertEquals(Integer.valueOf(1003), testData.getList2().get(1).getInt2());
+        assertEquals(Integer.valueOf(1005), testData.getList2().get(2).getInt1());
+        assertEquals(Integer.valueOf(1006), testData.getList2().get(2).getInt2());
 
         assertNull(testData.getList3());
 
         assertEquals(3, testData.getArray2().length);
-        assertEquals(new Integer(2001), ((ContainedData)testData.getArray2()[0]).getInt1());
-        assertEquals(null, ((ContainedData)testData.getArray2()[0]).getInt2());
-        assertEquals(new Integer(2002), ((ContainedData)testData.getArray2()[1]).getInt1());
-        assertEquals(new Integer(3003), ((ContainedData)testData.getArray2()[1]).getInt2());
-        assertEquals(new Integer(3005), ((ContainedData)testData.getArray2()[2]).getInt1());
-        assertEquals(new Integer(4006), ((ContainedData)testData.getArray2()[2]).getInt2());
+        assertEquals(Integer.valueOf(2001), testData.getArray2()[0].getInt1());
+        assertNull(testData.getArray2()[0].getInt2());
+        assertEquals(Integer.valueOf(2002), testData.getArray2()[1].getInt1());
+        assertEquals(Integer.valueOf(3003), testData.getArray2()[1].getInt2());
+        assertEquals(Integer.valueOf(3005), testData.getArray2()[2].getInt1());
+        assertEquals(Integer.valueOf(4006), testData.getArray2()[2].getInt2());
 
         assertNull(testData.getArray3());
     }

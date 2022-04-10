@@ -7,7 +7,7 @@ import io.vavr.control.Try;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractPartialEntity<A> implements PartialEntity<A> {
+public abstract class AbstractPartialEntity<A> implements PartialEntity {
     final protected A obj;
 
     protected AbstractPartialEntity(A obj) {
