@@ -1,0 +1,74 @@
+@startuml
+
+class ResponseUtils{
+    +{static} success() : SimpleResponse
+    +{static} failed() : SimpleResponse
+
+    +{static} <Payload> itemSuccess(payload: Payload) : ItemResponse<Payload>
+    +{static} <Payload> itemFailed(traceId: String, message: String) : ItemResponse<Payload>
+
+    +{static} <PayloadItem> listSuccess(payload: List<PayloadItem>) : ListResponse<PayloadItem>
+    +{static} <PayloadItem> arraySuccess(payload: PayloadItem[]) : ListResponse<PayloadItem>
+    +{static} <PayloadItem> listFailed(traceId: String, message: String) : ListResponse<PayloadItem>
+
+    +{static} <PayloadItem> pageSuccess(page:int, pageSize:int payload: List<PayloadItem>) : PageResponse<PayloadItem>
+    +{static} <PayloadItem> pageFailed(traceId: String, message: String) : PageResponse<PayloadItem>
+}
+
+interface Response {
+    + isSuccess: boolean
+    + isFailed: boolean
+}
+
+
+package simpleResponse{
+    interface SimpleResponse
+    Response <|-- SimpleResponse
+    class SuccessSimpleResponse implements SimpleResponse{
+    # constructor()
+    + {static} instance(): SuccessSimpleResponse
+    }
+    class FailSimpleResponse implements SimpleResponse{
+    + constructor(traceId: String, message: String)
+    }
+
+    ResponseUtils -> SuccessSimpleResponse
+    ResponseUtils -> FailSimpleResponse
+}
+
+package itemResponse {
+    interface ItemResponse<Payload> implements SimpleResponse {
+        + getPayload(): Payload
+    }
+    class SuccessItemResponse<Payload> extends SuccessSimpleResponse implements ItemResponse
+    class FailItemResponse<Payload> extends FailSimpleResponse implements ItemResponse
+}
+
+package listResponse {
+    interface ListResponse<PayloadItem> {
+    }
+    ItemResponse <|- ListResponse : Payload = List<PayloadItem>
+
+    class SuccessListResponse<PayloadItem> extends SuccessItemResponse implements ListResponse
+    class FailListResponse<PayloadItem> extends FailItemResponse implements ListResponse
+}
+
+package pageResponse {
+    interface PageResponse<PayloadItem> {
+    +page():int
+    +pageSize():int
+    }
+
+    PageResponse -|> ListResponse
+    class SuccessPageResponse<PayloadItem> extends SuccessListResponse implements PageResponse
+    class FailPageResponse<PayloadItem> extends FailListResponse implements PageResponse
+
+}
+
+
+ResponseUtils ----> SimpleResponse: return with
+ResponseUtils --> ItemResponse: return with
+ResponseUtils --> ListResponse: return with
+ResponseUtils --> PageResponse: return with
+
+@enduml
