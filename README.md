@@ -5,7 +5,7 @@ maven
     <dependency>
         <groupId>dev.xethh.webtools</groupId>
         <artifactId>RNRUtils</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.5</version>
     </dependency>
 ```
 
